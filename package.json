@@ -1,0 +1,22 @@
+{
+  "name": "hypixel-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kamyx001/hypixel-tracker.git"
+  },
+  "author": "Kamyx001",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kamyx001/hypixel-tracker/issues"
+  },
+  "homepage": "https://github.com/Kamyx001/hypixel-tracker#readme",
+  "dependencies": {
+    "discord.js": "^13.7.0"
+  }
+}
