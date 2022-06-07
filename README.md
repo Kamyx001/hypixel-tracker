@@ -17,8 +17,6 @@
 
 </p>
 
-Status -->
-
 <h4 align="center"> 
 	🚧  Hypixel Tracker 🚀 Under construction...  🚧
 </h4> 
