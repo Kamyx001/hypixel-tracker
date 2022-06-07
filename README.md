@@ -15,24 +15,17 @@
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/Kamyx001/hypixel-tracker?color=56BEB8">
 
-  <img alt="License" src="https://img.shields.io/github/license/Kamyx001/hypixel-tracker?color=56BEB8">
-
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/Kamyx001/hypixel-tracker?color=56BEB8" /> -->
-
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/Kamyx001/hypixel-tracker?color=56BEB8" /> -->
-
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/Kamyx001/hypixel-tracker?color=56BEB8" /> -->
 </p>
 
-<!-- Status -->
+Status -->
 
-<!-- <h4 align="center"> 
+<h4 align="center"> 
 	🚧  Hypixel Tracker 🚀 Under construction...  🚧
 </h4> 
 
-<hr> -->
+<hr>
 
-<p align="center">
+<!-- <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
   <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
   <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
@@ -95,4 +88,4 @@ Made with :heart: by <a href="https://github.com/Kamyx001" target="_blank">Kamyx
 
 &#xa0;
 
-<a href="#top">Back to top</a>
+<a href="#top">Back to top</a> -->
