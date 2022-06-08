@@ -1,26 +1,25 @@
-
-import WebhooksManager from './WebhooksManager';
 import fs from 'fs/promises';
+import ChangeDetector from './ChangeDetector';
+import PlayerList from './PlayerList';
 
 export default class Tracker {
   apiKeys: string[];
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys;
-    const manager = new WebhooksManager()
-    manager.sendMessageToAll("Hello World!");
-  }
+	players: PlayerList;
+  constructor(apiKeys: string[], players: PlayerList) {
+		this.apiKeys = apiKeys;
+		this.players = players;
+	}
 
-  // TODO fix this function
-  public async addApiKey(apiKey: string) {
-    this.apiKeys.push(apiKey);
-    await fs.writeFile('./js/apiKeys.json', JSON.stringify(this.apiKeys));
-  }
+	public async addApiKey(apiKey: string) {
+		this.apiKeys.push(apiKey);
+		await fs.writeFile('./js/apiKeys.json', JSON.stringify(this.apiKeys));
+	}
 
   public getApiKeys(): string[] {
     return this.apiKeys;
   }
 
   public initialize(): void {
-    
+		new ChangeDetector();
   }
 }
