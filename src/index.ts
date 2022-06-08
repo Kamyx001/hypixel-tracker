@@ -1,10 +1,9 @@
 import Tracker from "./Tracker";
-import apiKeysJSON from './apiKeys.json';
-import PlayerList from "./PlayerList";
+import players from "./players.json";
+import apiKeys from './apiKeys.json';
+import webhooks from './webhooks.json';
 
 
-const players = new PlayerList();
-
-const tracker = new Tracker(apiKeysJSON, players);
+const tracker = new Tracker(players, apiKeys, webhooks);
 
 tracker.initialize();
