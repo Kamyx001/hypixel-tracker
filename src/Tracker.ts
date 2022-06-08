@@ -17,7 +17,7 @@ export default class Tracker {
     this.players = playerJSON;
     this.apiKeys = apiKeys;
     this.webhooks = webhooks;
-    const manager = new WebhooksManager()
+    const manager = new WebhooksManager( webhooks );
     manager.sendMessageToAll("Hello World!");
   }
 

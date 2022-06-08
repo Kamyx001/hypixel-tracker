@@ -1,10 +1,11 @@
 import Webhook from "./Webhook";
-import webhooks from './webhooks.json';
-
 export default class WebhooksManager {
-  private webhooksList: Webhook[] = webhooks
-    .map( ( url: string)  => new Webhook(url))
-  constructor() {}
+  private webhooksList: Webhook[] = [];
+  constructor( webhooks: string[] ) {
+    webhooks.forEach((url) => {
+      this.addWebhook(url);
+    });
+  }
 
   public addWebhook(url: string): void {
     const webhook = new Webhook(url);
