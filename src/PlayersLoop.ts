@@ -1,3 +1,4 @@
+import { checkPlayer } from "./checkPlayer";
 import { PlayerDataFetchError } from "./errors/PlayerDataFetchError";
 //@ts-ignore
 import { StatusDataFetchError } from "./errors/StatusDataFetchError";
@@ -5,12 +6,13 @@ import Player from "./Player";
 import PlayerList from "./PlayerList";
 import WebhooksManager from "./WebhooksManager";
 
-export default class ChangeDetector {
+export default class PlayersLoop {
   private apiKeys: string[];
   private players: Player[];
   private webhooksManager: WebhooksManager;
 
-  public data = []
+  public apiKeyNr = 0;
+  public playerNr = 0;
 
   constructor( playerList: PlayerList, apiKeys: string[], webhooks: WebhooksManager ) {
     this.players = playerList.getPlayers();
@@ -26,7 +28,7 @@ export default class ChangeDetector {
   }
 
   //@ts-ignore
-  private fetchPlayerData( uuid: string, apiKey: string ): Promise<any>|null {
+  private fetchPlayerData( uuid: string, apiKey: string ): Promise<any> {
     try {
       let response = fetch( `https://api.hypixel.net/player?uuid=${uuid}&key=${apiKey}` ).then( response => response.json() );
       return response;
@@ -47,12 +49,41 @@ export default class ChangeDetector {
   }
 
   private async loop() {
-    this.fetchStatusData( this.players[0].uuid, this.apiKeys[0] ).then( response => {
-      console.log(response.success);
-      this.webhooksManager.sendMessageToAll(JSON.stringify(response));
-    })
+    let time = 1000 / this.apiKeys.length;
+
+    let playerData = this.fetchPlayerData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
+    
+    // let statusData = this.fetchStatusData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
+    
+    await playerData;
+
+    let msg = "";
+
+    if ( this.players[this.playerNr].data.player == undefined ) {
+      this.players[this.playerNr].data.player = await playerData;
+    } else {
+      msg = checkPlayer( this.players[this.playerNr]?.data, await playerData);
+    }
+
+    console.log(playerData);
+    
+    if (msg != "") {
+      this.webhooksManager.sendMessageToAll(msg);
+    }
+
+    if ( this.apiKeyNr < this.apiKeys.length - 1 ) {
+      this.apiKeyNr++;
+    } else {
+      this.apiKeyNr = 0;
+    }
+    if ( this.playerNr < this.players.length - 1 ) {
+      this.playerNr++;
+    } else {
+      this.playerNr = 0;
+    }
+    
     setTimeout(() => {
       this.loop();
-    }, 1000);
+    }, time);
   }
 }

@@ -1,6 +1,6 @@
 import WebhooksManager from './WebhooksManager';
 import fs from 'fs/promises';
-import ChangeDetector from './ChangeDetector';
+import PlayersLoop from './PlayersLoop';
 import PlayerList from './PlayerList';
 
 export interface playerJSON {
@@ -24,7 +24,7 @@ export default class Tracker {
   }
 
   public initialize(): void {
-    const changeDetector = new ChangeDetector( this.playerList, this.apiKeys, this.webhooksManager );
+    const changeDetector = new PlayersLoop( this.playerList, this.apiKeys, this.webhooksManager );
     changeDetector.initialize();
   }
 }
