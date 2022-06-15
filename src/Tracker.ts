@@ -1,24 +1,21 @@
-
 import WebhooksManager from './WebhooksManager';
 import fs from 'fs/promises';
+import ChangeDetector from './ChangeDetector';
+import PlayerList from './PlayerList';
 
-
-interface playerJSON {
+export interface playerJSON {
   nick: string;
   uuid: string;
 }
 export default class Tracker {
+  public apiKeys: string[];
+  public playerList: PlayerList;
+  public webhooksManager: WebhooksManager;
 
-  players: playerJSON[];
-  apiKeys: string[];
-  webhooks: string[];
-  
   constructor(playerJSON: playerJSON[] , apiKeys: string[], webhooks: string[]) {
-    this.players = playerJSON;
+    this.playerList = new PlayerList( playerJSON );
     this.apiKeys = apiKeys;
-    this.webhooks = webhooks;
-    const manager = new WebhooksManager( webhooks );
-    manager.sendMessageToAll("Hello World!");
+    this.webhooksManager = new WebhooksManager( webhooks );
   }
 
   public async addApiKey(apiKey: string) {
@@ -26,11 +23,8 @@ export default class Tracker {
     await fs.writeFile('./js/apiKeys.json', JSON.stringify(this.apiKeys));
   }
 
-  public getApiKeys(): string[] {
-    return this.apiKeys;
-  }
-
   public initialize(): void {
-    // TODO: Make this function do something
+    const changeDetector = new ChangeDetector( this.playerList, this.apiKeys, this.webhooksManager );
+    changeDetector.initialize();
   }
 }

@@ -1,15 +1,19 @@
 import Webhook from "./Webhook";
+import fs from 'fs/promises';
 export default class WebhooksManager {
   private webhooksList: Webhook[] = [];
+  private webhooks: string[];
+
   constructor( webhooks: string[] ) {
-    webhooks.forEach((url) => {
-      this.addWebhook(url);
+    this.webhooks = webhooks;
+    this.webhooks.forEach((url) => {
+      this.addWebhook1(url);
     });
   }
 
-  public addWebhook(url: string): void {
-    const webhook = new Webhook(url);
-    this.webhooksList.push(webhook);
+  public async addWebhook(webhook: string) {
+    this.webhooks.push(webhook);
+    await fs.writeFile('./js/webhooks.json', JSON.stringify(this.webhooks));
   }
 
   public getWebhooks(): Webhook[] {
@@ -20,5 +24,10 @@ export default class WebhooksManager {
     this.webhooksList.forEach((webhook) => {
       webhook.send(msg);
     });
+  }
+
+  private addWebhook1(url: string): void {
+    const webhook = new Webhook(url);
+    this.webhooksList.push(webhook);
   }
 }

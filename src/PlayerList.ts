@@ -1,12 +1,21 @@
 import Player from "./Player";
-
+import { playerJSON } from "./Tracker";
 
 export default class PlayerList {
-    players: Player[] = [];
-    constructor() {}
+    private players: Player[] = [];
+
+    constructor( players: playerJSON[] ) {
+        players.forEach((player) => {
+            this.players.push(new Player(player.nick, player.uuid));
+        });
+    }
 
     public async addPlayer(nick: string) {
         this.players.push(new Player(nick, await this.nickToUuid(nick)));
+    }
+
+    public getPlayers(): Player[] {
+        return this.players;
     }
 
     private async nickToUuid(nick: string): Promise<string> {
