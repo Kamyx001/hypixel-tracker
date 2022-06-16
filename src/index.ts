@@ -2,7 +2,7 @@ import Tracker from "./Tracker";
 import players from "./players.json";
 import apiKeys from './apiKeys.json';
 import webhooks from './webhooks.json';
-import Bot from './bot';
+import Bot from './bot/Bot';
 import dotenv from 'dotenv';
 
 dotenv.config();

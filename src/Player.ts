@@ -6,6 +6,6 @@ export default class Player {
   constructor(nick: string, uuid: string) {
     this.nick = nick;
     this.uuid = uuid; 
-    this.data = {player: undefined};
+    this.data = {player: undefined, status: undefined};
   }
 }

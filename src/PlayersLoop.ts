@@ -32,8 +32,7 @@ export default class PlayersLoop {
     try {
       let response = fetch( `https://api.hypixel.net/player?uuid=${uuid}&key=${apiKey}` ).then( response => response.json() );
       return response;
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
       throw new PlayerDataFetchError(uuid);
     }
   }
@@ -49,23 +48,23 @@ export default class PlayersLoop {
   }
 
   private async loop() {
-    let time = 1000 / this.apiKeys.length;
+    let time = 1100 / this.apiKeys.length;
 
     let playerData = this.fetchPlayerData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
-    
-    // let statusData = this.fetchStatusData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
+    let statusData = this.fetchStatusData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
     
     await playerData;
+    await statusData;
 
     let msg = "";
 
-    if ( this.players[this.playerNr].data.player == undefined ) {
+    if ( this.players[this.playerNr].data.player == undefined || this.players[this.playerNr].data.status == undefined ) {
       this.players[this.playerNr].data.player = await playerData;
+      this.players[this.playerNr].data.status = await statusData;
+      console.log(statusData);
     } else {
-      msg = checkPlayer( this.players[this.playerNr]?.data, await playerData);
+      msg = checkPlayer( this.players[this.playerNr]?.data, await playerData, await statusData );
     }
-
-    console.log(playerData);
     
     if (msg != "") {
       this.webhooksManager.sendMessageToAll(msg);

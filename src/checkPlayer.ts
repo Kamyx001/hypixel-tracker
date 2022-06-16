@@ -8,9 +8,12 @@ import { threesLoss } from "./cases/threesLoss";
 import { threesWin } from "./cases/threesWin";
 import { foursWin } from "./cases/foursWin";
 import { foursLoss } from "./cases/foursLoss";
+import { onlineOffline } from "./cases/onlineOffline";
 
-export function checkPlayer(data: any, playerData: any): string {
+export function checkPlayer(data: any, playerData: any, statusData: any): string {
   let msg = "";
+
+  msg = onlineOffline(data, statusData, playerData, msg);
 
   msg = blocks_placed(data, playerData, msg);
 
