@@ -1,20 +1,36 @@
-export function checkPlayer(data: any, playerData: any): string {
-  let bedwarsStatsData = data.player.player.stats.Bedwars;
-  let bedwarsStatsPlayerData = playerData.player.stats.Bedwars;
+import { blocks_placed } from "./cases/blocks_placed";
+import { gameStarted } from "./cases/gameStarted";
+import { soloLose as soloLoss } from "./cases/soloLoss";
+import { soloWin } from "./cases/soloWin";
+import { doublesWin } from "./cases/doublesWin";
+import { doublesLoss } from "./cases/doublesLoss";
+import { threesLoss } from "./cases/threesLoss";
+import { threesWin } from "./cases/threesWin";
+import { foursWin } from "./cases/foursWin";
+import { foursLoss } from "./cases/foursLoss";
 
+export function checkPlayer(data: any, playerData: any): string {
   let msg = "";
 
-  if( bedwarsStatsData.practice.bridging.blocks_placed != bedwarsStatsPlayerData.practice.bridging.blocks_placed ) {
-    let msg1 = `>>> \`${playerData.player.displayname}\` ${bedwarsStatsData.practice.bridging.blocks_placed} > ${bedwarsStatsPlayerData.practice.bridging.blocks_placed}`
-    bedwarsStatsData.practice.bridging.blocks_placed = bedwarsStatsPlayerData.practice.bridging.blocks_placed;
-    msg += msg1;
-  }
+  msg = blocks_placed(data, playerData, msg);
 
-  if ( bedwarsStatsData.games_played_bedwars_1 != bedwarsStatsPlayerData.games_played_bedwars_1 ) {
-    let msg1 = `>>> \`${playerData.player.displayname}'s\` game has started`
-    bedwarsStatsData.games_played_bedwars_1 = bedwarsStatsPlayerData.games_played_bedwars_1;
-    msg += '\n' + msg1;
-  }
+  msg = gameStarted(data, playerData, msg);
+
+  msg = soloWin(data, playerData, msg);
+
+  msg = soloLoss(data, playerData, msg);
+  
+  msg = doublesWin(data, playerData, msg);
+
+  msg = doublesLoss(data, playerData, msg);
+
+  msg = threesWin(data, playerData, msg);
+
+  msg = threesLoss(data, playerData, msg);
+
+  msg = foursWin(data, playerData, msg);
+
+  msg = foursLoss(data, playerData, msg);
 
   return msg;
 }
