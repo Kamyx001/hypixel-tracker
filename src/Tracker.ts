@@ -2,6 +2,7 @@ import WebhooksManager from './WebhooksManager';
 import fs from 'fs/promises';
 import PlayersLoop from './PlayersLoop';
 import PlayerList from './PlayerList';
+import DiscordJS from 'discord.js';
 
 export interface playerJSON {
   nick: string;
@@ -25,22 +26,34 @@ export default class Tracker {
     return this.playerList.getPlayers();
   }
 
+  public getApiKeys(): string[] {
+    return this.apiKeys;
+  }
+
+  public fetchUsage(apiKey: any) {
+    return fetch(`https://api.hypixel.net/key?key=${apiKey}`).then(response => response.json());
+  }
+
   public async addApiKey(apiKey: string) {
     this.changeDetector.addApiKey(apiKey);
     await fs.writeFile('./js/apiKeys.json', JSON.stringify(this.apiKeys));
+    await fs.writeFile('./src/apiKeys.json', JSON.stringify(this.apiKeys));
   }
 
-  public async addPlayer(player: string) {
-    await this.playerList.addPlayer(player);
+  public async addPlayer(player: string, message: DiscordJS.Message) {
+    await this.playerList.addPlayer(player, message);
     let players: playerJSON[] = []
     this.playerList.getPlayers().forEach((player) => { players.push({nick: player.getNick(), uuid: player.getUuid()}) });
     await fs.writeFile('./js/players.json', JSON.stringify(players));
     await fs.writeFile('./src/players.json', JSON.stringify(players));
   }
 
-  public async addWebhook(webhook: string) {
-    this.webhooksManager.addWebhook(webhook);
-    await fs.writeFile('./js/webhooks.json', JSON.stringify(this.webhooksManager.getWebhooks()));
+  public async addWebhook(webhook: string, message: DiscordJS.Message) {
+    this.webhooksManager.addWebhook(webhook, message);
+  }
+
+  public async removeWebhook(webhook: string, message: DiscordJS.Message) {
+    this.webhooksManager.removeWebhook(webhook, message);
   }
 
   public sendMessageToAllWebhooks(message: string): void {

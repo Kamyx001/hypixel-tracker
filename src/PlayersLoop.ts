@@ -2,7 +2,6 @@ import { checkPlayer } from "./checkPlayer";
 import { PlayerDataFetchError } from "./errors/PlayerDataFetchError";
 //@ts-ignore
 import { StatusDataFetchError } from "./errors/StatusDataFetchError";
-import Player from "./Player";
 import PlayerList from "./PlayerList";
 import WebhooksManager from "./WebhooksManager";
 
@@ -11,16 +10,16 @@ export default class PlayersLoop {
     this.apiKeys.push(apiKey);
   }
   private apiKeys: string[];
-  private players: Player[];
   private webhooksManager: WebhooksManager;
+  private playerList: PlayerList;
 
   public apiKeyNr = 0;
   public playerNr = 0;
 
   constructor( playerList: PlayerList, apiKeys: string[], webhooks: WebhooksManager ) {
-    this.players = playerList.getPlayers();
     this.webhooksManager = webhooks;
     this.apiKeys = apiKeys;
+    this.playerList = playerList;
   }
 
   public initialize() {
@@ -53,20 +52,19 @@ export default class PlayersLoop {
   private async loop() {
     let time = 1100 / this.apiKeys.length;
 
-    let playerData = this.fetchPlayerData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
-    let statusData = this.fetchStatusData( this.players[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
+    let playerData = this.fetchPlayerData( this.playerList.getPlayers()[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
+    let statusData = this.fetchStatusData( this.playerList.getPlayers()[this.playerNr].uuid, this.apiKeys[this.apiKeyNr] );
     
     await playerData;
     await statusData;
 
     let msg = "";
 
-    if ( this.players[this.playerNr].data.player == undefined || this.players[this.playerNr].data.status == undefined ) {
-      this.players[this.playerNr].data.player = await playerData;
-      this.players[this.playerNr].data.status = await statusData;
-      console.log(statusData);
+    if ( this.playerList.getPlayers()[this.playerNr].data.player == undefined || this.playerList.getPlayers()[this.playerNr].data.status == undefined ) {
+      this.playerList.getPlayers()[this.playerNr].data.player = await playerData;
+      this.playerList.getPlayers()[this.playerNr].data.status = await statusData;
     } else {
-      msg = checkPlayer( this.players[this.playerNr]?.data, await playerData, await statusData );
+      msg = checkPlayer( this.playerList.getPlayers()[this.playerNr]?.data, await playerData, await statusData );
     }
     
     if (msg != "") {
@@ -78,11 +76,12 @@ export default class PlayersLoop {
     } else {
       this.apiKeyNr = 0;
     }
-    if ( this.playerNr < this.players.length - 1 ) {
+    if ( this.playerNr < this.playerList.getPlayers().length - 1 ) {
       this.playerNr++;
     } else {
       this.playerNr = 0;
     }
+    console.log(time);
     
     setTimeout(() => {
       this.loop();

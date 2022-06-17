@@ -1,4 +1,3 @@
-import { blocks_placed } from "./cases/blocks_placed";
 import { gameStarted } from "./cases/gameStarted";
 import { soloLose as soloLoss } from "./cases/soloLoss";
 import { soloWin } from "./cases/soloWin";
@@ -14,8 +13,6 @@ export function checkPlayer(data: any, playerData: any, statusData: any): string
   let msg = "";
 
   msg = onlineOffline(data, statusData, playerData, msg);
-
-  msg = blocks_placed(data, playerData, msg);
 
   msg = gameStarted(data, playerData, msg);
 
