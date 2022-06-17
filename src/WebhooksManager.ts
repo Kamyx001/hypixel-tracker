@@ -1,8 +1,8 @@
 import Webhook from "./Webhook";
 import fs from 'fs/promises';
 export default class WebhooksManager {
-  private webhooksList: Webhook[] = [];
   private webhooks: string[];
+  private webhooksList: Webhook[] = [];
 
   constructor( webhooks: string[] ) {
     this.webhooks = webhooks;

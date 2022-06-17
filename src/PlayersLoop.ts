@@ -7,6 +7,9 @@ import PlayerList from "./PlayerList";
 import WebhooksManager from "./WebhooksManager";
 
 export default class PlayersLoop {
+  addApiKey(apiKey: string) {
+    this.apiKeys.push(apiKey);
+  }
   private apiKeys: string[];
   private players: Player[];
   private webhooksManager: WebhooksManager;

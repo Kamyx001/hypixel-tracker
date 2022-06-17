@@ -8,4 +8,25 @@ export default class Player {
     this.uuid = uuid; 
     this.data = {player: undefined, status: undefined};
   }
+
+  public setData(data: any) {
+    this.data = data;
+  }
+
+  public getData(): any {
+    return this.data;
+  }
+
+  public getNick(): string {
+    return this.nick;
+  }
+
+  public getUuid(): string {
+    return this.uuid;
+  }
+
+  public setUuid(uuid: string) {
+    this.uuid = uuid;
+  }
+
 }
