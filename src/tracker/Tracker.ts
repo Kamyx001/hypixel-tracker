@@ -48,6 +48,14 @@ export default class Tracker {
     await fs.writeFile('./src/players.json', JSON.stringify(players));
   }
 
+  public async removePlayer(player: string, message: DiscordJS.Message) {
+    await this.playerList.removePlayer(player, message);
+    let players: playerJSON[] = []
+    this.playerList.getPlayers().forEach((player) => { players.push({nick: player.getNick(), uuid: player.getUuid()}) });
+    await fs.writeFile('./js/players.json', JSON.stringify(players));
+    await fs.writeFile('./src/players.json', JSON.stringify(players));
+  }
+
   public async addWebhook(webhook: string, message: DiscordJS.Message) {
     this.webhooksManager.addWebhook(webhook, message);
   }

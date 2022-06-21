@@ -4,3 +4,4 @@ js
 src/players.json
 src/webhooks.json
 src/apiKeys.json
+src/winstreaks.json

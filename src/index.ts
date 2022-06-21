@@ -1,4 +1,4 @@
-import Tracker from "./Tracker";
+import Tracker from "./tracker/Tracker";
 import players from "./players.json";
 import apiKeys from './apiKeys.json';
 import webhooks from './webhooks.json';

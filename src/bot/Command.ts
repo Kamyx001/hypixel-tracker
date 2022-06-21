@@ -2,17 +2,17 @@ import DiscordJS from 'discord.js';
 
 export default class Command {
   private aliases: string[];
+  private args: string[]|[];
   private category: string;
   private description: string;
   private enabled: boolean;
   private name: string;
   private ownerOnly: boolean;
-  private usage: string;
 
-  constructor(name: string, description: string, usage: string, aliases: string[], category: string, enabled: boolean, ownerOnly: boolean) {
+  constructor(name: string, description: string, args: string[]|[], aliases: string[], category: string, enabled: boolean, ownerOnly: boolean) {
     this.name = name;
     this.description = description;
-    this.usage = usage;
+    this.args = args;
     this.aliases = aliases;
     this.category = category;
     this.enabled = enabled;
@@ -39,8 +39,8 @@ export default class Command {
     return this.name;
   }
 
-  public getUsage(): string {
-    return this.usage;
+  public getArgs(): string[]|[] {
+    return this.args;
   }
 
   public isEnabled(): boolean {

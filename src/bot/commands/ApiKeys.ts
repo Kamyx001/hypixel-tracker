@@ -1,13 +1,13 @@
 import Command from "../Command";
-import DiscordJS from "discord.js";
+import { Message } from "discord.js";
 
 
 export default class ApiKeys extends Command {
   constructor() {
-    super("apikeys", "Shows the API keys", "apikeys", ["apikeys"], "tracker", true, false);
+    super("apikeys", "Shows the API keys", [], ["apikeys", "keys"], "tracker", true, false);
   }
 
-  public override async run(message: DiscordJS.Message, _args: string[], additionalData: any): Promise<void> {
+  public override async run(message: Message, _args: string[], additionalData: any): Promise<void> {
     let apiKeys = "";
     await additionalData.tracker.getApiKeys().forEach(async (apiKey: any) => {
       let usage = await additionalData.tracker.fetchUsage(apiKey);

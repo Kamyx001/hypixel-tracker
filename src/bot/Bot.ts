@@ -1,4 +1,4 @@
-import Tracker from "../Tracker";
+import Tracker from "../tracker/Tracker";
 import DiscordJS, { Intents } from "discord.js";
 import CommandManager from "./CommandManager";
 import Help from "./commands/Help";
@@ -9,6 +9,8 @@ import RemoveWebhook from "./commands/RemoveWebhook";
 import Players from './commands/Players';
 import ApiKeys from "./commands/ApiKeys";
 import AddKey from "./commands/AddKey";
+import Bedwars from './commands/stats/Bedwars';
+import RemovePlayer from "./commands/RemovePlayer";
 
 export default class Bot {
   private client: DiscordJS.Client;
@@ -34,11 +36,13 @@ export default class Bot {
     new CommandManager( [
       new Help,
       new AddPlayer,
+      new ApiKeys,
+      new Players,
+      new AddKey,
+      new Bedwars,
       new AddWebhook,
       new RemoveWebhook,
-      new Players,
-      new ApiKeys,
-      new AddKey,
+      new RemovePlayer,
     ], this.client, this.tracker );
     
     this.messageCreate();

@@ -1,12 +1,12 @@
 import Command from "../Command";
-import DiscordJS from "discord.js";
+import { Message } from "discord.js";
 
 export default class AddKey extends Command {
   constructor() {
-    super("addkey", "Adds an API key to the tracker", "addkey <key>", ["addkey"], "tracker", true, false);
+    super("addkey", "Adds an API key to the tracker", ["key"], ["addkey"], "tracker", true, false);
   }
 
-  public override async run(message: DiscordJS.Message, args: string[], additionalData: any): Promise<void> {
+  public override async run(message: Message, args: string[], additionalData: any): Promise<void> {
     message.delete();
     if ( additionalData.tracker.getApiKeys().find((apiKey: any) => apiKey === args[0]) ) {
       message.channel.send(`${args[0]} is already in the tracker.`);

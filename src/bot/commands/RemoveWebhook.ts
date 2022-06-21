@@ -1,13 +1,13 @@
 import Command from "../Command";
-import DiscordJS from 'discord.js';
-import Tracker from "../../Tracker";
+import {Message} from 'discord.js';
+import Tracker from "../../tracker/Tracker";
 
 export default class RemoveWebhook extends Command {
   constructor() {
-    super("removewebhook", "Remove a webhook from the tracker.", "removewebhook <webhook-url>", ["removewebhook", "rmwh"], "admin only", true, true);
+    super("removewebhook", "Remove a webhook from the tracker.", ["webhook-url"], ["removewebhook", "rmwh"], "admin only", true, true);
   }
 
-  public override run(message: DiscordJS.Message, args: string[], options: { commands: Command[], tracker: Tracker }): void {
+  public override run(message: Message, args: string[], options: { commands: Command[], tracker: Tracker }): void {
     if (args.length < 1) {
       message.channel.send("You must provide a webhook URL.");
       return;

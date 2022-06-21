@@ -1,7 +1,7 @@
 import Command from "./Command";
 import DiscordJS from "discord.js";
 import botConfig from "./botConfig.json";
-import Tracker from "../Tracker";
+import Tracker from "../tracker/Tracker";
 export default class CommandManager {
   private commands: Command[];
   private client: DiscordJS.Client;
@@ -20,7 +20,7 @@ export default class CommandManager {
         const command = this.getCommand(commandName);
         if (command) {
           if (command.isEnabled()) {
-            if (command.isOwnerOnly() && !this.client.user?.bot && message.author.id !== '515559976102526986') {
+            if (command.isOwnerOnly() && message.author.id !== "515559976102526986") {
               message.channel.send("This command is owner only.");
               return;
             }

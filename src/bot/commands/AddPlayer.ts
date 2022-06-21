@@ -1,13 +1,13 @@
-import DiscordJS from 'discord.js';
 import Command from '../Command';
+import { Message } from 'discord.js';
 
 export default class AddPlayer extends Command {
 
   constructor() {
-    super("addplayer", "Adds a player to the tracker", "addplayer <player>", ["addplayer"], "tracker", true, false);
+    super("addplayer", "Adds a player to the tracker", ["player"], ["addplayer", "add"], "tracker", true, false);
   }
 
-  public override async run(message: DiscordJS.Message, args: string[], additionalData: any): Promise<void> {
+  public override async run(message: Message, args: string[], additionalData: any): Promise<void> {
     if ( additionalData.tracker.getPlayers().find((player: any) => player.getNick().toLowerCase() === args[0].toLocaleLowerCase()) ) {
       message.channel.send(`${args[0]} is already in the tracker.`);
       return;

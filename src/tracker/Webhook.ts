@@ -1,5 +1,5 @@
 import { WebhookClient } from 'discord.js';
-import WebhookNotWorking from './errors/WebhookNotWorking';
+import WebhookNotWorking from '../errors/WebhookNotWorking';
 
 export default class Webhook {
   private id: string;
